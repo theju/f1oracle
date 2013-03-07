@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.utils.translation import ugettext as _
 
 class Country(models.Model):
     name = models.CharField(max_length=50)
@@ -44,9 +45,10 @@ class Result(models.Model):
     updated_on = models.DateTimeField(auto_now=True)
 
     def __unicode__(self):
-        return "{0} : {1} earned {2} points".format(self.race,
-                                                    self.driver,
-                                                    self.points)
+        return _("%(race)s : %(driver)s earned "
+                 "%(points)d points") % {"race": self.race,
+                                         "driver": self.driver,
+                                         "points" self.points}
 
 
 class RaceDriverPrediction(models.Model):
@@ -58,9 +60,25 @@ class RaceDriverPrediction(models.Model):
     updated_on = models.DateTimeField(auto_now=True)
 
     def __unicode__(self):
-        return "{0} : {1} -> {2} points".format(self.user.username,
-                                                self.race,
-                                                self.score)
+        return _("%(username)s : %(race)s -> "
+                 "%(score)d points") % {"username": self.user.username,
+                                        "race": self.race,
+                                        "score": self.score}
+
+
+class RaceConstructorPrediction(models.Model):
+    user = models.ForeignKey(User)
+    race = models.ForeignKey(Race)
+    constructor = models.ForeignKey(Constructor)
+    score = models.PositiveIntegerField(default=0)
+    created_on = models.DateTimeField(auto_now_add=True)
+    updated_on = models.DateTimeField(auto_now=True)
+
+    def __unicode__(self):
+        return _("%(username)s : %(race)s -> "
+                 "%(score)d points") % {"username": self.user.username,
+                                        "race": self.race,
+                                        "score": self.score}
 
 
 class OverallDriverPrediction(models.Model):
@@ -71,9 +89,10 @@ class OverallDriverPrediction(models.Model):
     updated_on = models.DateTimeField(auto_now=True)
 
     def __unicode__(self):
-        return "{0} : {1} -> {2} points".format(self.user.username,
-                                                self.driver,
-                                                self.score)
+        return _("%(username)s : %(driver)s -> "
+                 "%(score)d points") % {"username": self.user.username,
+                                        "driver": self.driver,
+                                        "score": self.score}
 
 
 class OverallConstructorPrediction(models.Model):
@@ -84,9 +103,11 @@ class OverallConstructorPrediction(models.Model):
     updated_on = models.DateTimeField(auto_now=True)
 
     def __unicode__(self):
-        return "{0} : {1} -> {2} points".format(self.user.username,
-                                                self.constructor,
-                                                self.score)
+        return _("%(usename)s : %(constructor)s -> "
+                 "%(score)d points") % {"username": self.user.username,
+                                        "constructor": self.constructor,
+                                        "score": self.score}
+
 
 class OverallDriverPredictionHistory(models.Model):
     user = models.ForeignKey(User)
@@ -96,9 +117,10 @@ class OverallDriverPredictionHistory(models.Model):
     updated_on = models.DateTimeField(auto_now=True)
 
     def __unicode__(self):
-        return "{0} : {1} -> {2} points".format(self.user.username,
-                                                self.driver,
-                                                self.score)
+        return _("%(username)s : %(driver)s -> "
+                 "%(score)d points") % {"username": self.user.username,
+                                        "driver": self.driver,
+                                        "score": self.score}
 
 
 class OverallConstructorPredictionHistory(models.Model):
@@ -109,6 +131,19 @@ class OverallConstructorPredictionHistory(models.Model):
     updated_on = models.DateTimeField(auto_now=True)
 
     def __unicode__(self):
-        return "{0} : {1} -> {2} points".format(self.user.username,
-                                                self.constructor,
-                                                self.score)
+        return _("%(username)s : %(constructor)s -> "
+                 "%(score)d points") % {"username": self.user.username,
+                                        "constructor": self.constructor,
+                                        "score": self.score}
+
+
+class RaceUserWinner(models.Model):
+    user = models.ForeignKey(User)
+    race = models.ForeignKey(Race)
+    driver = models.ForeignKey(Driver)
+    constructor = models.ForeignKey(Constructor)
+
+    def __unicode__(self):
+        return _("%(username)s is winner "
+                 "of %(race)s") % {"username": self.user.username,
+                                   "race": self.race}
