@@ -1,3 +1,4 @@
+import datetime
 from django.test import TestCase
 from django.contrib.auth.models import User
 from django.core.urlresolvers import reverse
@@ -77,7 +78,28 @@ class AuthTest(TestCase):
         pass
 
     def test_race1_driver_prediction(self):
-        pass
+        driver_id = 5
+        response = self.client.post("/dashboard/race1/driver/",
+                                    {"driver_id": driver_id})
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(RaceDriverPrediction.objects.count(), 1)
+        user_prediction = RaceDriverPrediction.objects.get()
+        self.assertEqual(user_prediction.race.country.iso_code, "AU")
+        self.assertEqual(user_prediction.driver.id, driver_id)
+        self.assertEqual(user_prediction.score, 0)
+        self.assertEqual(user_prediction.user, response.request.user)
+        # Add tests to check the score getting updated after the race
+        
 
     def test_race1_constructor_prediction(self):
-        pass
+        constructor_id = 2
+        response = self.client.post("/dashboard/race1/constructor/",
+                                    {"constructor_id": constructor_id})
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(RaceConstructorPrediction.objects.count(), 1)
+        user_prediction = RaceConstructorPrediction.objects.get()
+        self.assertEqual(user_prediction.race.country.iso_code, "AU")
+        self.assertEqual(user_prediction.constructor.id, constructor_id)
+        self.assertEqual(user_prediction.score, 0)
+        self.assertEqual(user_prediction.user, response.request.user)        
+        # Add tests to check the score getting updated after the race
