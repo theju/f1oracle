@@ -9,6 +9,10 @@ class Country(models.Model):
     def __unicode__(self):
         return self.name
 
+    class Meta:
+        verbose_name_plural = "Countries"
+        ordering = ["name"]
+
 
 class Race(models.Model):
     name = models.CharField(max_length=30)
@@ -19,6 +23,9 @@ class Race(models.Model):
     def __unicode__(self):
         return self.name
 
+    class Meta:
+        ordering = ["start_date"]
+
 
 class Constructor(models.Model):
     name = models.CharField(max_length=30)
@@ -26,6 +33,9 @@ class Constructor(models.Model):
 
     def __unicode__(self):
         return self.name
+
+    class Meta:
+        ordering = ["name"]
 
 
 class Driver(models.Model):
@@ -35,6 +45,9 @@ class Driver(models.Model):
 
     def __unicode__(self):
         return self.name
+
+    class Meta:
+        ordering = ["id"]
 
 
 class Result(models.Model):
@@ -48,7 +61,7 @@ class Result(models.Model):
         return _("%(race)s : %(driver)s earned "
                  "%(points)d points") % {"race": self.race,
                                          "driver": self.driver,
-                                         "points" self.points}
+                                         "points": self.points}
 
 
 class RaceDriverPrediction(models.Model):
