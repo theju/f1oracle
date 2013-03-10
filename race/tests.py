@@ -105,13 +105,15 @@ class AuthTest(TestCase):
         user_prediction = OverallDriverPrediction.objects.get()
         self.assertEqual(user_prediction.driver.id, driver_id)
         self.assertEqual(user_prediction.score, 0)
-        self.assertEqual(user_prediction.user, response.request.user)
+        self.assertEqual(user_prediction.user, user)
 
-        result = Result.objects.create(race__id=1,
+        race1 = Race.objects.get(id=1)
+        race2 = Race.objects.get(id=2)
+        result = Result.objects.create(race=race1,
                                        driver=user_prediction.driver,
                                        points=18)
         self.assertEqual(user_prediction.score, 18)
-        result = Result.objects.create(race__id=2,
+        result = Result.objects.create(race=race2,
                                        driver=user_prediction.driver,
                                        points=25)
         self.assertEqual(user_prediction.score, 43)
@@ -137,24 +139,28 @@ class AuthTest(TestCase):
                                     {"constructor_id": constructor_id})
         self.assertEqual(response.status_code, 200)
         self.assertEqual(OverallConstructorPrediction.objects.count(), 1)
-        user_prediction = OverallRaceConstructorPrediction.objects.get()
+        user_prediction = OverallConstructorPrediction.objects.get()
         self.assertEqual(user_prediction.constructor.id, constructor_id)
         self.assertEqual(user_prediction.score, 0)
-        self.assertEqual(user_prediction.user, response.request.user)
+        self.assertEqual(user_prediction.user, user)
 
-        result = Result.objects.create(race__id=1,
-                                       driver__id=3,
+        driver1 = Driver.objects.get(id=3)
+        driver2 = Driver.objects.get(id=4)
+        race1 = Race.objects.get(id=1)
+        race2 = Race.objects.get(id=2)
+        result = Result.objects.create(race=race1,
+                                       driver=driver1,
                                        points=18)
         self.assertEqual(user_prediction.score, 18)
-        result = Result.objects.create(race__id=1,
-                                       driver__id=4,
+        result = Result.objects.create(race=race1,
+                                       driver=driver2,
                                        points=25)
-        result = Result.objects.create(race__id=2,
-                                       driver__id=3,
+        result = Result.objects.create(race=race2,
+                                       driver=driver1,
                                        points=10)
         self.assertEqual(user_prediction.score, 18)
-        result = Result.objects.create(race__id=2,
-                                       driver__id=4,
+        result = Result.objects.create(race=race2,
+                                       driver=driver2,
                                        points=18)
         self.assertEqual(user_prediction.score, 71)
 
@@ -183,7 +189,7 @@ class AuthTest(TestCase):
         self.assertEqual(user_prediction.race.country.iso_code, "AU")
         self.assertEqual(user_prediction.driver.id, driver_id)
         self.assertEqual(user_prediction.score, 0)
-        self.assertEqual(user_prediction.user, response.request.user)
+        self.assertEqual(user_prediction.user, user)
 
         result = Result.objects.create(race=user_prediction.race,
                                        driver=user_prediction.driver,
@@ -203,12 +209,14 @@ class AuthTest(TestCase):
         self.assertEqual(user_prediction.race.country.iso_code, "AU")
         self.assertEqual(user_prediction.constructor.id, constructor_id)
         self.assertEqual(user_prediction.score, 0)
-        self.assertEqual(user_prediction.user, response.request.user)        
+        self.assertEqual(user_prediction.user, user)        
 
+        driver1 = Driver.objects.get(id=4)
+        driver2 = Driver.objects.get(id=3)
         result = Result.objects.create(race=user_prediction.race,
-                                       driver__id=4,
+                                       driver=driver1,
                                        points=18)
         result = Result.objects.create(race=user_prediction.race,
-                                       driver__id=3,
+                                       driver=driver2,
                                        points=25)
         self.assertEqual(user_prediction.score, 43)

@@ -5,14 +5,17 @@
   <div class="span12">
     <div class="span6">
       <h3>Overall Driver Prediction</h3>
+      {% if max_try_error.driver %}
+      <p>{% trans "You have exceeded the maximum number of times you can change this value" %}</p>
+      {% endif %}
       {% if num_tries_remaining.driver %}
-      <p>You may change this {{ num_tries_remaining.driver }} more times</p>
+      <p>{% blocktrans with total=num_tries_remaining.driver %}You may change this {{ total }} more times{% endblocktrans %}</p>
       {% endif %}
       <form action="{% url 'race.views.overall_driver_prediction' %}" method="post">
 	{% csrf_token %}
 	<select name="driver_id">
 	  {% for driver in drivers %}
-	  <option value="{{ driver.id }}">{{ driver }}</option>
+	  <option value="{{ driver.id }}" {% if overall_driver_prediction.driver.id == driver.id %}selected="selected"{% endif %}>{{ driver }}</option>
 	  {% endfor %}
 	</select>
 	<input type="submit" value="Submit" class="btn btn-primary">
@@ -20,8 +23,11 @@
     </div>
     <div class="span6">
       <h3>Overall Constructor Prediction</h3>
+      {% if max_try_error.constructor %}
+      <p>{% trans "You have exceeded the maximum number of times you can change this value" %}</p>
+      {% endif %}
       {% if num_tries_remaining.constructor %}
-      <p>You may change this {{ num_tries_remaining.constructor }} more times</p>
+      <p>{% blocktrans with total=num_tries_remaining.constructor %}You may change this {{ total }} more times{% endblocktrans %}</p>
       {% endif %}
       <form action="{% url 'race.views.overall_constructor_prediction' %}" method="post">
 	{% csrf_token %}
