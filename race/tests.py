@@ -6,10 +6,17 @@ from .models import Race, Driver, Constructor, Result, \
     RaceDriverPrediction, OverallDriverPrediction, \
     OverallConstructorPrediction, RaceConstructorPrediction, \
     OverallDriverPredictionHistory, OverallConstructorPredictionHistory, \
-    RaceWinner
+    RaceUserWinner
 
 
 class AuthTest(TestCase):
+    fixtures = ["initial_data.json"]
+
+    def create_user(self, username, password, email=None):
+        return User.objects.create_user(username=username,
+                                        email=email,
+                                        password=password)
+
     def test_signup(self):
         post_data = {
             "username": "",
@@ -66,12 +73,15 @@ class AuthTest(TestCase):
         pass
 
     def test_add_overall_driver_prediction(self):
+        auth_kwargs = {"username": "foo1", "password": "bar1"}
+        user = self.create_user(**auth_kwargs)
+        self.client.login(**auth_kwargs)
         driver_id = 5
         response = self.client.post("/dashboard/overall_race/driver/",
                                     {"driver_id": driver_id})
         self.assertEqual(response.status_code, 200)
-        self.assertEqual(OverallRaceDriverPrediction.objects.count(), 1)
-        user_prediction = OverallRaceDriverPrediction.objects.get()
+        self.assertEqual(OverallDriverPrediction.objects.count(), 1)
+        user_prediction = OverallDriverPrediction.objects.get()
         self.assertEqual(user_prediction.driver.id, driver_id)
         self.assertEqual(user_prediction.score, 0)
         self.assertEqual(user_prediction.user, response.request.user)
@@ -86,20 +96,26 @@ class AuthTest(TestCase):
         self.assertEqual(user_prediction.score, 43)
 
     def test_overall_driver_prediction_exceed_max_tries(self):
+        auth_kwargs = {"username": "foo1", "password": "bar1"}
+        user = self.create_user(**auth_kwargs)
+        self.client.login(**auth_kwargs)
         driver_id = 5
         for ii in range(4):
             response = self.client.post("/dashboard/overall_race/driver/",
                                         {"driver_id": driver_id + ii})
-        user_prediction = OverallRaceDriverPrediction.objects.get(user=request.user)
+        user_prediction = OverallDriverPrediction.objects.get(user=user)
         self.assertEqual(user_prediction.driver.id, 7)
-        self.assertEqual(OverallRaceDriverPredictionHistory.objects.count(), 3)
+        self.assertEqual(OverallDriverPredictionHistory.objects.count(), 3)
     
     def test_add_overall_constructor_prediction(self):
+        auth_kwargs = {"username": "foo1", "password": "bar1"}
+        user = self.create_user(**auth_kwargs)
+        self.client.login(**auth_kwargs)
         constructor_id = 5
         response = self.client.post("/dashboard/overall_race/constructor/",
                                     {"constructor_id": constructor_id})
         self.assertEqual(response.status_code, 200)
-        self.assertEqual(OverallRaceConstructorPrediction.objects.count(), 1)
+        self.assertEqual(OverallConstructorPrediction.objects.count(), 1)
         user_prediction = OverallRaceConstructorPrediction.objects.get()
         self.assertEqual(user_prediction.constructor.id, constructor_id)
         self.assertEqual(user_prediction.score, 0)
@@ -122,15 +138,21 @@ class AuthTest(TestCase):
         self.assertEqual(user_prediction.score, 71)
 
     def test_overall_constructor_exceed_max_tries(self):
+        auth_kwargs = {"username": "foo1", "password": "bar1"}
+        user = self.create_user(**auth_kwargs)
+        self.client.login(**auth_kwargs)
         constructor_id = 5
         for ii in range(4):
             response = self.client.post("/dashboard/overall_race/constructor/",
                                         {"constructor_id": constructor_id + ii})
-        user_prediction = OverallRaceConstructorPrediction.objects.get(user=request.user)
+        user_prediction = OverallConstructorPrediction.objects.get(user=user)
         self.assertEqual(user_prediction.constructor.id, 7)
-        self.assertEqual(OverallRaceConstructorPredictionHistory.objects.count(), 3)
+        self.assertEqual(OverallConstructorPredictionHistory.objects.count(), 3)
 
     def test_race1_driver_prediction(self):
+        auth_kwargs = {"username": "foo1", "password": "bar1"}
+        user = self.create_user(**auth_kwargs)
+        self.client.login(**auth_kwargs)
         driver_id = 5
         response = self.client.post("/dashboard/race1/driver/",
                                     {"driver_id": driver_id})
@@ -148,6 +170,9 @@ class AuthTest(TestCase):
         self.assertEqual(user_prediction.score, 18)        
 
     def test_race1_constructor_prediction(self):
+        auth_kwargs = {"username": "foo1", "password": "bar1"}
+        user = self.create_user(**auth_kwargs)
+        self.client.login(**auth_kwargs)
         constructor_id = 2
         response = self.client.post("/dashboard/race1/constructor/",
                                     {"constructor_id": constructor_id})
@@ -166,4 +191,3 @@ class AuthTest(TestCase):
                                        driver__id=3,
                                        points=25)
         self.assertEqual(user_prediction.score, 43)
- 
