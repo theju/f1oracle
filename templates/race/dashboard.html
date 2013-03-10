@@ -1,0 +1,69 @@
+{% extends "base.html" %}{% load i18n %}
+
+{% block content %}
+<div class="row-fluid">
+  <div class="span12">
+    <div class="span6">
+      <h3>Overall Driver Prediction</h3>
+      {% if num_tries_remaining.driver %}
+      <p>You may change this {{ num_tries_remaining.driver }} more times</p>
+      {% endif %}
+      <form action="{% url 'race.views.overall_driver_prediction' %}" method="post">
+	{% csrf_token %}
+	<select name="driver_id">
+	  {% for driver in drivers %}
+	  <option value="{{ driver.id }}">{{ driver }}</option>
+	  {% endfor %}
+	</select>
+	<input type="submit" value="Submit" class="btn btn-primary">
+      </form>
+    </div>
+    <div class="span6">
+      <h3>Overall Constructor Prediction</h3>
+      {% if num_tries_remaining.constructor %}
+      <p>You may change this {{ num_tries_remaining.constructor }} more times</p>
+      {% endif %}
+      <form action="{% url 'race.views.overall_constructor_prediction' %}" method="post">
+	{% csrf_token %}
+	<select name="constructor_id">
+	  {% for constructor in constructors %}
+	  <option value="{{ constructor.id }}">{{ constructor }}</option>
+	  {% endfor %}
+	</select>
+	<input type="submit" value="Submit" class="btn btn-primary">
+      </form>
+    </div>
+  </div>
+  {% for race in races %}
+  <div class="span12">
+    <h3>{{ race }} {% trans "Grand Prix" %}</h3>
+  </div>
+  <div class="span5">
+    <h5>{% trans "Driver" %}</h5>
+    <p>You may change this value any number of times until {{ race.start_date }}</p>
+    <form action="{% url 'race.views.race_driver_prediction' race_id=race.id %}" method="post">
+      {% csrf_token %}
+      <select name="driver_id">
+	{% for driver in drivers %}
+	<option value="{{ driver.id }}">{{ driver }}</option>
+	{% endfor %}
+      </select>
+      <input type="submit" value="Submit" class="btn btn-primary">
+    </form>
+  </div>
+  <div class="span5">
+    <h5>{% trans "Constructor" %}</h5>
+    <p>You may change this value any number of times until {{ race.start_date }}</p>
+    <form action="{% url 'race.views.race_constructor_prediction' race_id=race.id %}" method="post">
+      {% csrf_token %}
+      <select name="constructor_id">
+	{% for constructor in constructors %}
+	<option value="{{ constructor.id }}">{{ constructor }}</option>
+	{% endfor %}
+      </select>
+      <input type="submit" value="Submit" class="btn btn-primary">
+    </form>
+  </div>
+  {% endfor %}
+</div>
+{% endblock %}
