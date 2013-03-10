@@ -10,7 +10,7 @@ class RegisterForm(forms.Form):
     password2 = forms.CharField(label=_('Confirm Password'),
                                 max_length=20,
                                 widget=forms.PasswordInput())
-    email = forms.EmailField(label=_('Email'), required=False)
+    email = forms.EmailField(label=_('Email (Optional)'), required=False)
 
     def clean_username(self):
         username = self.cleaned_data["username"]
