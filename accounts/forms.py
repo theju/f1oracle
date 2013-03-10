@@ -34,9 +34,11 @@ class LoginForm(forms.Form):
 
     def clean(self):
         try:
-            user = User.objects.get(username=self.cleaned_data['username'])
+            user = User.objects.get(username=self.cleaned_data.get('username'))
         except User.DoesNotExist:
-            raise forms.ValidationError(_("Username/Password did not match"))
-        if not user.check_password(self.cleaned_data["password"]):
-            raise forms.ValidationError(_("Username/Password did not match"))
+            raise forms.ValidationError(_("Username/Password did not match any of the "
+                                          "records in our system"))
+        if not user.check_password(self.cleaned_data.get("password")):
+            raise forms.ValidationError(_("Username/Password did not match any of the "
+                                          "records in our system"))
         return self.cleaned_data

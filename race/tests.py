@@ -69,20 +69,25 @@ class AuthTest(TestCase):
         post_data = {"username": "", "password": ""}
         response = self.client.post("/accounts/login/", post_data)
         self.assertEqual(response.status_code, 200)
-        self.assertTrue(response.context["form"].errors.keys() == ["username", "password"])
+        self.assertTrue(response.context["form"].errors.keys() \
+                            == ["username", "password", "__all__"])
         post_data = {"username": "", "password": "bar123"}
         response = self.client.post("/accounts/login/", post_data)
         self.assertEqual(response.status_code, 200)
-        self.assertTrue(response.context["form"].errors.keys() == ["username"])
+        self.assertTrue(response.context["form"].errors.keys() \
+                            == ["username", "__all__"])
         post_data = {"username": "foo", "password": ""}
         response = self.client.post("/accounts/login/", post_data)
         self.assertEqual(response.status_code, 200)
-        self.assertTrue(response.context["form"].errors.keys() == ["password"])
-        post_data = {"username": "foo", "password": "bar123"}
-        response = self.client.post("/accounts/register/", post_data)
+        self.assertTrue(response.context["form"].errors.keys() \
+                            == ["password", "__all__"])
+        post_data = {"username": "foo", "password": "bar"}
+        self.create_user(**post_data)
         response = self.client.post("/accounts/login/", post_data)
         self.assertEqual(response.status_code, 302)
-        self.assertEqual(response["Location"], reverse("dashboard_index"))
+        redirect_url = response["Location"]
+        redirect_url_parsed = urlparse.urlparse(redirect_url)
+        self.assertEqual(redirect_url_parsed.path, reverse("dashboard"))
 
     def test_forgot_password(self):
         # TODO: Add later
