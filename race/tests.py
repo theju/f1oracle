@@ -66,16 +66,69 @@ class AuthTest(TestCase):
         pass
 
     def test_add_overall_driver_prediction(self):
-        pass
+        driver_id = 5
+        response = self.client.post("/dashboard/overall_race/driver/",
+                                    {"driver_id": driver_id})
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(OverallRaceDriverPrediction.objects.count(), 1)
+        user_prediction = OverallRaceDriverPrediction.objects.get()
+        self.assertEqual(user_prediction.driver.id, driver_id)
+        self.assertEqual(user_prediction.score, 0)
+        self.assertEqual(user_prediction.user, response.request.user)
+
+        result = Result.objects.create(race__id=1,
+                                       driver=user_prediction.driver,
+                                       points=18)
+        self.assertEqual(user_prediction.score, 18)
+        result = Result.objects.create(race__id=2,
+                                       driver=user_prediction.driver,
+                                       points=25)
+        self.assertEqual(user_prediction.score, 43)
 
     def test_overall_driver_prediction_exceed_max_tries(self):
-        pass
+        driver_id = 5
+        for ii in range(4):
+            response = self.client.post("/dashboard/overall_race/driver/",
+                                        {"driver_id": driver_id + ii})
+        user_prediction = OverallRaceDriverPrediction.objects.get(user=request.user)
+        self.assertEqual(user_prediction.driver.id, 7)
+        self.assertEqual(OverallRaceDriverPredictionHistory.objects.count(), 3)
     
     def test_add_overall_constructor_prediction(self):
-        pass
+        constructor_id = 5
+        response = self.client.post("/dashboard/overall_race/constructor/",
+                                    {"constructor_id": constructor_id})
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(OverallRaceConstructorPrediction.objects.count(), 1)
+        user_prediction = OverallRaceConstructorPrediction.objects.get()
+        self.assertEqual(user_prediction.constructor.id, constructor_id)
+        self.assertEqual(user_prediction.score, 0)
+        self.assertEqual(user_prediction.user, response.request.user)
+
+        result = Result.objects.create(race__id=1,
+                                       driver__id=3,
+                                       points=18)
+        self.assertEqual(user_prediction.score, 18)
+        result = Result.objects.create(race__id=1,
+                                       driver__id=4,
+                                       points=25)
+        result = Result.objects.create(race__id=2,
+                                       driver__id=3,
+                                       points=10)
+        self.assertEqual(user_prediction.score, 18)
+        result = Result.objects.create(race__id=2,
+                                       driver__id=4,
+                                       points=18)
+        self.assertEqual(user_prediction.score, 71)
 
     def test_overall_constructor_exceed_max_tries(self):
-        pass
+        constructor_id = 5
+        for ii in range(4):
+            response = self.client.post("/dashboard/overall_race/constructor/",
+                                        {"constructor_id": constructor_id + ii})
+        user_prediction = OverallRaceConstructorPrediction.objects.get(user=request.user)
+        self.assertEqual(user_prediction.constructor.id, 7)
+        self.assertEqual(OverallRaceConstructorPredictionHistory.objects.count(), 3)
 
     def test_race1_driver_prediction(self):
         driver_id = 5
@@ -88,8 +141,11 @@ class AuthTest(TestCase):
         self.assertEqual(user_prediction.driver.id, driver_id)
         self.assertEqual(user_prediction.score, 0)
         self.assertEqual(user_prediction.user, response.request.user)
-        # Add tests to check the score getting updated after the race
-        
+
+        result = Result.objects.create(race=user_prediction.race,
+                                       driver=user_prediction.driver,
+                                       points=18)
+        self.assertEqual(user_prediction.score, 18)        
 
     def test_race1_constructor_prediction(self):
         constructor_id = 2
@@ -102,4 +158,12 @@ class AuthTest(TestCase):
         self.assertEqual(user_prediction.constructor.id, constructor_id)
         self.assertEqual(user_prediction.score, 0)
         self.assertEqual(user_prediction.user, response.request.user)        
-        # Add tests to check the score getting updated after the race
+
+        result = Result.objects.create(race=user_prediction.race,
+                                       driver__id=4,
+                                       points=18)
+        result = Result.objects.create(race=user_prediction.race,
+                                       driver__id=3,
+                                       points=25)
+        self.assertEqual(user_prediction.score, 43)
+ 
