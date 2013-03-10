@@ -1,0 +1,678 @@
+[
+{
+    "pk": 1, 
+    "model": "race.country", 
+    "fields": {
+        "iso_code": "GB", 
+        "name": "Great Britain"
+    }
+},
+{
+    "pk": 2, 
+    "model": "race.country", 
+    "fields": {
+        "iso_code": "IT", 
+        "name": "Italy"
+    }
+},
+{
+    "pk": 3, 
+    "model": "race.country", 
+    "fields": {
+        "iso_code": "CH", 
+        "name": "Switzerland"
+    }
+},
+{
+    "pk": 4, 
+    "model": "race.country", 
+    "fields": {
+        "iso_code": "DE", 
+        "name": "Germany"
+    }
+},
+{
+    "pk": 5, 
+    "model": "race.country", 
+    "fields": {
+        "iso_code": "AU", 
+        "name": "Australia"
+    }
+},
+{
+    "pk": 6, 
+    "model": "race.country", 
+    "fields": {
+        "iso_code": "ES", 
+        "name": "Spain"
+    }
+},
+{
+    "pk": 7, 
+    "model": "race.country", 
+    "fields": {
+        "iso_code": "BR", 
+        "name": "Brazil"
+    }
+},
+{
+    "pk": 8, 
+    "model": "race.country", 
+    "fields": {
+        "iso_code": "MX", 
+        "name": "Mexico"
+    }
+},
+{
+    "pk": 9, 
+    "model": "race.country", 
+    "fields": {
+        "iso_code": "FI", 
+        "name": "Finland"
+    }
+},
+{
+    "pk": 10, 
+    "model": "race.country", 
+    "fields": {
+        "iso_code": "FR", 
+        "name": "France"
+    }
+},
+{
+    "pk": 11, 
+    "model": "race.country", 
+    "fields": {
+        "iso_code": "VE", 
+        "name": "Venezuela"
+    }
+},
+{
+    "pk": 12, 
+    "model": "race.country", 
+    "fields": {
+        "iso_code": "NL", 
+        "name": "Netherlands"
+    }
+},
+{
+    "pk": 13, 
+    "model": "race.country", 
+    "fields": {
+        "iso_code": "MY", 
+        "name": "Malaysia"
+    }
+},
+{
+    "pk": 14, 
+    "model": "race.country", 
+    "fields": {
+        "iso_code": "CN", 
+        "name": "China"
+    }
+},
+{
+    "pk": 15, 
+    "model": "race.country", 
+    "fields": {
+        "iso_code": "BH", 
+        "name": "Bahrain"
+    }
+},
+{
+    "pk": 16, 
+    "model": "race.country", 
+    "fields": {
+        "iso_code": "MC", 
+        "name": "Monaco"
+    }
+},
+{
+    "pk": 17, 
+    "model": "race.country", 
+    "fields": {
+        "iso_code": "CA", 
+        "name": "Canada"
+    }
+},
+{
+    "pk": 18, 
+    "model": "race.country", 
+    "fields": {
+        "iso_code": "HU", 
+        "name": "Hungary"
+    }
+},
+{
+    "pk": 19, 
+    "model": "race.country", 
+    "fields": {
+        "iso_code": "BE", 
+        "name": "Belgium"
+    }
+},
+{
+    "pk": 20, 
+    "model": "race.country", 
+    "fields": {
+        "iso_code": "SG", 
+        "name": "Singapore"
+    }
+},
+{
+    "pk": 21, 
+    "model": "race.country", 
+    "fields": {
+        "iso_code": "KR", 
+        "name": "South Korea"
+    }
+},
+{
+    "pk": 22, 
+    "model": "race.country", 
+    "fields": {
+        "iso_code": "JP", 
+        "name": "Japan"
+    }
+},
+{
+    "pk": 23, 
+    "model": "race.country", 
+    "fields": {
+        "iso_code": "IN", 
+        "name": "India"
+    }
+},
+{
+    "pk": 24, 
+    "model": "race.country", 
+    "fields": {
+        "iso_code": "AE", 
+        "name": "United Arab Emirates"
+    }
+},
+{
+    "pk": 25, 
+    "model": "race.country", 
+    "fields": {
+        "iso_code": "US", 
+        "name": "United States of America"
+    }
+},
+{
+    "pk": 1, 
+    "model": "race.race", 
+    "fields": {
+        "country": 5, 
+        "name": "Australian", 
+        "end_date": "2013-03-17", 
+        "start_date": "2013-03-15"
+    }
+},
+{
+    "pk": 2, 
+    "model": "race.race", 
+    "fields": {
+        "country": 13, 
+        "name": "Malaysian", 
+        "end_date": "2013-03-24", 
+        "start_date": "2013-03-22"
+    }
+},
+{
+    "pk": 3, 
+    "model": "race.race", 
+    "fields": {
+        "country": 14, 
+        "name": "Chinese", 
+        "end_date": "2013-04-14", 
+        "start_date": "2013-04-12"
+    }
+},
+{
+    "pk": 4, 
+    "model": "race.race", 
+    "fields": {
+        "country": 15, 
+        "name": "Bahrain", 
+        "end_date": "2013-04-21", 
+        "start_date": "2013-04-19"
+    }
+},
+{
+    "pk": 5, 
+    "model": "race.race", 
+    "fields": {
+        "country": 6, 
+        "name": "Spanish", 
+        "end_date": "2013-05-12", 
+        "start_date": "2013-05-10"
+    }
+},
+{
+    "pk": 6, 
+    "model": "race.race", 
+    "fields": {
+        "country": 16, 
+        "name": "Monaco", 
+        "end_date": "2013-05-26", 
+        "start_date": "2013-05-24"
+    }
+},
+{
+    "pk": 7, 
+    "model": "race.race", 
+    "fields": {
+        "country": 17, 
+        "name": "Canadian", 
+        "end_date": "2013-06-09", 
+        "start_date": "2013-06-07"
+    }
+},
+{
+    "pk": 8, 
+    "model": "race.race", 
+    "fields": {
+        "country": 1, 
+        "name": "British", 
+        "end_date": "2013-06-30", 
+        "start_date": "2013-06-28"
+    }
+},
+{
+    "pk": 9, 
+    "model": "race.race", 
+    "fields": {
+        "country": 4, 
+        "name": "German", 
+        "end_date": "2013-07-07", 
+        "start_date": "2013-07-05"
+    }
+},
+{
+    "pk": 10, 
+    "model": "race.race", 
+    "fields": {
+        "country": 18, 
+        "name": "Hungarian", 
+        "end_date": "2013-07-28", 
+        "start_date": "2013-07-26"
+    }
+},
+{
+    "pk": 11, 
+    "model": "race.race", 
+    "fields": {
+        "country": 19, 
+        "name": "Belgian", 
+        "end_date": "2013-08-25", 
+        "start_date": "2013-08-23"
+    }
+},
+{
+    "pk": 12, 
+    "model": "race.race", 
+    "fields": {
+        "country": 2, 
+        "name": "Italian", 
+        "end_date": "2013-09-08", 
+        "start_date": "2013-09-06"
+    }
+},
+{
+    "pk": 13, 
+    "model": "race.race", 
+    "fields": {
+        "country": 20, 
+        "name": "Singapore", 
+        "end_date": "2013-09-22", 
+        "start_date": "2013-09-20"
+    }
+},
+{
+    "pk": 14, 
+    "model": "race.race", 
+    "fields": {
+        "country": 21, 
+        "name": "Korean", 
+        "end_date": "2013-10-06", 
+        "start_date": "2013-10-04"
+    }
+},
+{
+    "pk": 15, 
+    "model": "race.race", 
+    "fields": {
+        "country": 22, 
+        "name": "Japanese", 
+        "end_date": "2013-10-13", 
+        "start_date": "2013-10-11"
+    }
+},
+{
+    "pk": 16, 
+    "model": "race.race", 
+    "fields": {
+        "country": 23, 
+        "name": "Indian", 
+        "end_date": "2013-10-27", 
+        "start_date": "2013-10-25"
+    }
+},
+{
+    "pk": 17, 
+    "model": "race.race", 
+    "fields": {
+        "country": 24, 
+        "name": "Abu Dhabi", 
+        "end_date": "2013-11-03", 
+        "start_date": "2013-11-01"
+    }
+},
+{
+    "pk": 18, 
+    "model": "race.race", 
+    "fields": {
+        "country": 25, 
+        "name": "United States", 
+        "end_date": "2013-11-17", 
+        "start_date": "2013-11-15"
+    }
+},
+{
+    "pk": 19, 
+    "model": "race.race", 
+    "fields": {
+        "country": 7, 
+        "name": "Brazilian", 
+        "end_date": "2013-11-24", 
+        "start_date": "2013-11-22"
+    }
+},
+{
+    "pk": 1, 
+    "model": "race.constructor", 
+    "fields": {
+        "country": 1, 
+        "name": "Caterham"
+    }
+},
+{
+    "pk": 2, 
+    "model": "race.constructor", 
+    "fields": {
+        "country": 2, 
+        "name": "Ferrari"
+    }
+},
+{
+    "pk": 3, 
+    "model": "race.constructor", 
+    "fields": {
+        "country": 1, 
+        "name": "Force India"
+    }
+},
+{
+    "pk": 4, 
+    "model": "race.constructor", 
+    "fields": {
+        "country": 1, 
+        "name": "Lotus"
+    }
+},
+{
+    "pk": 5, 
+    "model": "race.constructor", 
+    "fields": {
+        "country": 1, 
+        "name": "Marussia"
+    }
+},
+{
+    "pk": 6, 
+    "model": "race.constructor", 
+    "fields": {
+        "country": 1, 
+        "name": "McLaren"
+    }
+},
+{
+    "pk": 7, 
+    "model": "race.constructor", 
+    "fields": {
+        "country": 1, 
+        "name": "Mercedes"
+    }
+},
+{
+    "pk": 8, 
+    "model": "race.constructor", 
+    "fields": {
+        "country": 1, 
+        "name": "Red Bull Racing"
+    }
+},
+{
+    "pk": 9, 
+    "model": "race.constructor", 
+    "fields": {
+        "country": 3, 
+        "name": "Sauber"
+    }
+},
+{
+    "pk": 10, 
+    "model": "race.constructor", 
+    "fields": {
+        "country": 2, 
+        "name": "Torro Rosso"
+    }
+},
+{
+    "pk": 11, 
+    "model": "race.constructor", 
+    "fields": {
+        "country": 1, 
+        "name": "Williams"
+    }
+},
+{
+    "pk": 1, 
+    "model": "race.driver", 
+    "fields": {
+        "country": 4, 
+        "name": "Sebastian Vettel", 
+        "constructor": 8
+    }
+},
+{
+    "pk": 2, 
+    "model": "race.driver", 
+    "fields": {
+        "country": 5, 
+        "name": "Mark Webber", 
+        "constructor": 8
+    }
+},
+{
+    "pk": 3, 
+    "model": "race.driver", 
+    "fields": {
+        "country": 6, 
+        "name": "Fernando Alonso", 
+        "constructor": 2
+    }
+},
+{
+    "pk": 4, 
+    "model": "race.driver", 
+    "fields": {
+        "country": 7, 
+        "name": "Felipe Massa", 
+        "constructor": 2
+    }
+},
+{
+    "pk": 5, 
+    "model": "race.driver", 
+    "fields": {
+        "country": 1, 
+        "name": "Jenson Button", 
+        "constructor": 6
+    }
+},
+{
+    "pk": 6, 
+    "model": "race.driver", 
+    "fields": {
+        "country": 8, 
+        "name": "Sergio Perez", 
+        "constructor": 6
+    }
+},
+{
+    "pk": 7, 
+    "model": "race.driver", 
+    "fields": {
+        "country": 9, 
+        "name": "Kimi R\u00e4ikk\u00f6nen", 
+        "constructor": 4
+    }
+},
+{
+    "pk": 8, 
+    "model": "race.driver", 
+    "fields": {
+        "country": 10, 
+        "name": "Romain Grosjean", 
+        "constructor": 4
+    }
+},
+{
+    "pk": 9, 
+    "model": "race.driver", 
+    "fields": {
+        "country": 4, 
+        "name": "Nico Rosberg", 
+        "constructor": 7
+    }
+},
+{
+    "pk": 10, 
+    "model": "race.driver", 
+    "fields": {
+        "country": 1, 
+        "name": "Lewis Hamilton", 
+        "constructor": 7
+    }
+},
+{
+    "pk": 11, 
+    "model": "race.driver", 
+    "fields": {
+        "country": 4, 
+        "name": "Nico Hulkenberg", 
+        "constructor": 9
+    }
+},
+{
+    "pk": 12, 
+    "model": "race.driver", 
+    "fields": {
+        "country": 8, 
+        "name": "Esteban Gutierrez", 
+        "constructor": 9
+    }
+},
+{
+    "pk": 13, 
+    "model": "race.driver", 
+    "fields": {
+        "country": 1, 
+        "name": "Paul di Resta", 
+        "constructor": 3
+    }
+},
+{
+    "pk": 14, 
+    "model": "race.driver", 
+    "fields": {
+        "country": 4, 
+        "name": "Adrian Sutil", 
+        "constructor": 3
+    }
+},
+{
+    "pk": 15, 
+    "model": "race.driver", 
+    "fields": {
+        "country": 11, 
+        "name": "Pastor Maldonado", 
+        "constructor": 11
+    }
+},
+{
+    "pk": 16, 
+    "model": "race.driver", 
+    "fields": {
+        "country": 9, 
+        "name": "Valtteri Bottas", 
+        "constructor": 11
+    }
+},
+{
+    "pk": 17, 
+    "model": "race.driver", 
+    "fields": {
+        "country": 10, 
+        "name": "Jean-Eric Vergne", 
+        "constructor": 10
+    }
+},
+{
+    "pk": 18, 
+    "model": "race.driver", 
+    "fields": {
+        "country": 5, 
+        "name": "Daniel Ricciardo", 
+        "constructor": 10
+    }
+},
+{
+    "pk": 19, 
+    "model": "race.driver", 
+    "fields": {
+        "country": 10, 
+        "name": "Charles Pic", 
+        "constructor": 1
+    }
+},
+{
+    "pk": 20, 
+    "model": "race.driver", 
+    "fields": {
+        "country": 12, 
+        "name": "Giedo van der Garde", 
+        "constructor": 1
+    }
+},
+{
+    "pk": 21, 
+    "model": "race.driver", 
+    "fields": {
+        "country": 10, 
+        "name": "Jules Bianchi", 
+        "constructor": 5
+    }
+},
+{
+    "pk": 22, 
+    "model": "race.driver", 
+    "fields": {
+        "country": 1, 
+        "name": "Max Chilton", 
+        "constructor": 5
+    }
+}
+]
