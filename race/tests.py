@@ -1,4 +1,5 @@
 import datetime
+import urlparse
 from django.test import TestCase
 from django.contrib.auth.models import User
 from django.core.urlresolvers import reverse
@@ -20,31 +21,46 @@ class AuthTest(TestCase):
     def test_signup(self):
         post_data = {
             "username": "",
-            "password": "",
+            "password1": "",
+            "password2": "",
             "email": ""
             }
         response = self.client.post("/accounts/register/", post_data)
         self.assertEqual(response.status_code, 200)
         self.assertTrue(response.context["form"].errors != {})
-        self.assertTrue(response.context["form"].errors.keys() == ["username", "password"])
+        self.assertTrue(response.context["form"].errors.keys() \
+                            == ["username", "password1", "password2"])
         new_post_data = post_data.copy()
         new_post_data["username"] = "foo"
-        new_post_data["password"] = "bar"
+        new_post_data["password1"] = "bar"
+        new_post_data["password2"] = "bar"
+        response = self.client.post("/accounts/register/", new_post_data)
+        self.assertEqual(response.status_code, 302)
+        self.assertEqual(User.objects.count(), 1)
+        new_post_data = post_data.copy()
+        new_post_data["username"] = "foo"
+        new_post_data["password1"] = "bar"
+        new_post_data["password2"] = "bar1"
         response = self.client.post("/accounts/register/", new_post_data)
         self.assertEqual(response.status_code, 200)
-        self.assertTrue(response.context["form"].errors == {})
+        self.assertTrue(response.context["form"].errors != {})
         self.assertEqual(User.objects.count(), 1)
         new_post_data["username"] = "foo"
-        new_post_data["password"] = "bar123"
+        new_post_data["password1"] = "bar123"
+        new_post_data["password2"] = "bar123"
         response = self.client.post("/accounts/register/", new_post_data)
         self.assertEqual(response.status_code, 200)
         self.assertTrue(response.context["form"].errors.keys(), ["username"])
         self.assertEqual(User.objects.count(), 1)
         new_post_data["username"] = "foo1"
-        new_post_data["password"] = "bar123"
+        new_post_data["password1"] = "bar123"
+        new_post_data["password2"] = "bar123"
         new_post_data["email"] = "foo@example.com"
         response = self.client.post("/accounts/register/", new_post_data)
-        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.status_code, 302)
+        redirect_url = response["Location"]
+        redirect_url_parsed = urlparse.urlparse(redirect_url)
+        self.assertEqual(redirect_url_parsed.path, reverse("dashboard"))
         self.assertEqual(User.objects.count(), 2)
         new_user = User.objects.get(username=new_post_data["username"])
         self.assertEqual(new_user.email, new_post_data["email"])

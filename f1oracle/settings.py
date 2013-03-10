@@ -1,6 +1,8 @@
 # Django settings for f1oracle project.
 import os
 
+PROJECT_PATH = os.path.dirname(os.path.abspath(__file__))
+
 DEBUG = False
 TEMPLATE_DEBUG = DEBUG
 
@@ -62,7 +64,7 @@ MEDIA_URL = ''
 # Don't put anything in this directory yourself; store your static files
 # in apps' "static/" subdirectories and in STATICFILES_DIRS.
 # Example: "/var/www/example.com/static/"
-STATIC_ROOT = os.path.join(os.path.abspath(__file__), "../static")
+STATIC_ROOT = os.path.join(PROJECT_PATH, "../static")
 
 # URL prefix for static files.
 # Example: "http://example.com/static/", "http://static.example.com/"
@@ -112,7 +114,7 @@ TEMPLATE_DIRS = (
     # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
-    os.path.join(os.path.abspath(__file__), "../templates"),
+    os.path.join(PROJECT_PATH, "../templates"),
 )
 
 INSTALLED_APPS = (
@@ -125,6 +127,7 @@ INSTALLED_APPS = (
     'django.contrib.admin',
 
     'race',
+    'accounts',
 )
 
 # A sample logging configuration. The only tangible logging

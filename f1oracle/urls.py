@@ -9,4 +9,6 @@ urlpatterns = patterns('',
     # url(r'^f1oracle/', include('f1oracle.foo.urls')),
 
     url(r'^admin/', include(admin.site.urls)),
+    url(r'^accounts/', include('accounts.urls')),
+    url(r'^', include('race.urls')),
 )
