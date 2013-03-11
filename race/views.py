@@ -1,6 +1,6 @@
 from .models import Driver, Constructor, Race, OverallDriverPredictionHistory, \
     OverallConstructorPredictionHistory, OverallConstructorPrediction, \
-    OverallDriverPrediction
+    OverallDriverPrediction, RaceDriverPrediction, RaceConstructorPrediction
 from django.shortcuts import render_to_response
 from django.template import RequestContext
 from django.views.decorators.http import require_POST
@@ -85,8 +85,20 @@ def race_driver_prediction(request, race_id=None):
         race = Race.objects.get(id=race_id)
     except Race.DoesNotExist:
         raise Http404
-    if datetime.date.today() >= race.start_date:
-        pass
+    try:
+        driver = Driver.objects.get(id=request.POST["driver_id"])
+    except Driver.DoesNotExist:
+        raise Http404
+    if datetime.date.today() <= race.start_date:
+        try:
+            driver_prediction = RaceDriverPrediction.objects.get(user=request.user,
+                                                                 race=race)
+            driver_prediction.driver = driver
+            driver_prediction.save()
+        except RaceDriverPrediction.DoesNotExist:
+            RaceDriverPrediction.objects.create(user=request.user,
+                                                race=race,
+                                                driver=driver)
     return render_to_response("race/dashboard.html",
                               context,
                               context_instance=RequestContext(request))
@@ -99,8 +111,20 @@ def race_constructor_prediction(request, race_id=None):
         race = Race.objects.get(id=race_id)
     except Race.DoesNotExist:
         raise Http404
-    if datetime.date.today() >= race.start_date:
-        pass
+    try:
+        constructor = Constructor.objects.get(id=request.POST["constructor_id"])
+    except Constructor.DoesNotExist:
+        raise Http404
+    if datetime.date.today() <= race.start_date:
+        try:
+            constructor_prediction = RaceConstructorPrediction.objects.get(user=request.user,
+                                                                           race=race)
+            constructor_prediction.constructor = constructor
+            constructor_prediction.save()
+        except RaceConstructorPrediction.DoesNotExist:
+            RaceConstructorPrediction.objects.create(user=request.user,
+                                                     race=race,
+                                                     constructor=constructor)
     return render_to_response("race/dashboard.html",
                               context,
                               context_instance=RequestContext(request))

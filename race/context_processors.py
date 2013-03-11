@@ -1,6 +1,7 @@
 from .models import Driver, Constructor, Race, \
     OverallDriverPredictionHistory, OverallConstructorPredictionHistory, \
-    OverallDriverPrediction, OverallConstructorPrediction
+    OverallDriverPrediction, OverallConstructorPrediction, \
+    RaceDriverPrediction, RaceConstructorPrediction
 import datetime
 
 def race_context_processor(request):
@@ -18,6 +19,12 @@ def race_context_processor(request):
     num_tries_remaining = {"driver": 3 - driver_predictions,
                            "constructor": 3 - constructor_predictions}
 
+    race_driver_predictions = []
+    race_constructor_predictions = []
+    for race in races:
+        race_driver_predictions.extend(list(RaceDriverPrediction.objects.filter(user=request.user)))
+        race_constructor_predictions.extend(list(RaceConstructorPrediction.objects.filter(user=request.user)))
+
     try:
         overall_driver_prediction = OverallDriverPrediction.objects.get(user=request.user)
     except OverallDriverPrediction.DoesNotExist:
@@ -33,5 +40,7 @@ def race_context_processor(request):
         "num_tries_remaining": num_tries_remaining,
         "overall_driver_prediction": overall_driver_prediction,
         "overall_constructor_prediction": overall_constructor_prediction,
+        "race_driver_predictions": race_driver_predictions,
+        "race_constructor_predictions": race_constructor_predictions,
         "today": datetime.date.today()
     }
