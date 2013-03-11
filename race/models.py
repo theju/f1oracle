@@ -1,6 +1,10 @@
 from django.db import models
 from django.contrib.auth.models import User
 from django.utils.translation import ugettext as _
+from django.db.models.signals import post_save
+from rq import Queue
+from redis import Redis
+from django.conf import settings
 
 class Country(models.Model):
     name = models.CharField(max_length=50)
@@ -160,3 +164,29 @@ class RaceUserWinner(models.Model):
         return _("%(username)s is winner "
                  "of %(race)s") % {"username": self.user.username,
                                    "race": self.race}
+
+
+def update_scores(instance):
+    for prediction in RaceDriverPrediction.objects.filter(driver=instance.driver):
+        prediction.score += instance.points
+        prediction.save()
+    for prediction in OverallDriverPrediction.objects.filter(driver=instance.driver):
+        prediction.score += instance.points
+        prediction.save()
+    for prediction in RaceConstructorPrediction.objects.filter(constructor=instance.driver.constructor):
+        prediction.score += instance.points
+        prediction.save()
+    for prediction in OverallConstructorPrediction.objects.filter(constructor=instance.driver.constructor):
+        prediction.score += instance.points
+        prediction.save()
+
+# Signal handlers
+def update_scores_signal_handler(**kwargs):
+    if kwargs["created"]:
+        redis_conn = Redis()
+        queue_kwargs = {"connection": redis_conn}
+        if settings.DEBUG == True:
+            queue_kwargs.update({"async": False})
+        qu = Queue(**queue_kwargs)
+        qu.enqueue(update_scores, kwargs["instance"])
+post_save.connect(update_scores_signal_handler, Result)
