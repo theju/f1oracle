@@ -259,6 +259,7 @@ class RaceTestCase(TestCase):
         result = Result.objects.create(race=user_prediction.race,
                                        driver=user_prediction.driver,
                                        points=18)
+        user_prediction = RaceDriverPrediction.objects.get()
         self.assertEqual(user_prediction.score, 18)        
 
     def test_race1_constructor_prediction(self):
@@ -284,4 +285,5 @@ class RaceTestCase(TestCase):
         result = Result.objects.create(race=user_prediction.race,
                                        driver=driver2,
                                        points=25)
+        user_prediction = RaceConstructorPrediction.objects.get()
         self.assertEqual(user_prediction.score, 43)
