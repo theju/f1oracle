@@ -29,6 +29,9 @@ def overall_driver_prediction(request):
                                   context_instance=RequestContext(request))
     try:
         driver_prediction = OverallDriverPrediction.objects.get(user=request.user)
+        if driver_prediction.driver != driver:
+            driver_prediction.driver = driver
+            driver_prediction.save()
         score = driver_prediction.score
     except OverallDriverPrediction.DoesNotExist:
         score = 0
@@ -58,6 +61,9 @@ def overall_constructor_prediction(request):
                                   context_instance=RequestContext(request))
     try:
         constructor_prediction = OverallConstructorPrediction.objects.get(user=request.user)
+        if constructor_prediction.constructor != constructor:
+            constructor_prediction.constructor = constructor
+            constructor_prediction.save()
         score = constructor_prediction.score
     except OverallConstructorPrediction.DoesNotExist:
         score = 0
