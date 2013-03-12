@@ -56,9 +56,13 @@
         </div>
 
         <div class="container">
-	    {% block content %}
-	    {% endblock %}
-            <hr>
+	  {% if messages %}
+	  {% for message in messages %}
+          <div {% if message.tags %} class="alert alert-{{ message.tags }}"{% endif %}>{{ message }}</div>
+	  {% endfor %}
+	  {% endif %}
+	  {% block content %}
+	  {% endblock %}
 
             <footer>
                 <p>&copy; <a href="http://thejaswi.info/" target="_blank">Thejaswi Puthraya</a> 2013</p>
