@@ -135,9 +135,13 @@ def race_constructor_prediction(request, race_id=None):
 @login_required
 def scores(request):
     redis = settings.REDIS_CONN
-    scores = redis.zrevrange("ranks", 0, 50, withscores=True)
+    scores_list = []
+    for rank, ii in enumerate(redis.zrevrange("ranks",
+                                              0, 50, withscores=True)):
+        scores_list.append({"rank": rank + 1,
+                            "username": ii[0], "score": int(ii[1])})
     return render_to_response("race/scores.html",
-                              {"scores": scores},
+                              {"scores": scores_list},
                               context_instance=RequestContext(request))
 
 @login_required
@@ -146,11 +150,14 @@ def my_scores(request):
     my_standing = redis.zrevrank("ranks", request.user.username)
     if not my_standing:
         my_standing = 5
-        
-    scores = redis.zrevrange("ranks",
-                             my_standing - 5,
-                             my_standing + 5,
-                             withscores=True)
+
+    scores_list = []
+    for rank, ii in enumerate(redis.zrevrange("ranks",
+                                              my_standing - 5,
+                                              my_standing + 5,
+                                              withscores=True)):
+        scores_list.append({"rank": my_standing - 5 + 1,
+                            "username": ii[0], "score": int(ii[1])})
     return render_to_response("race/scores.html",
                               {"scores": scores},
                               context_instance=RequestContext(request))
