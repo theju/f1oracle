@@ -1,0 +1,35 @@
+{% extends "base.html" %}{% load i18n %}
+
+{% block content %}
+<div class="row-fluid">
+  <div class="span12">
+    <ul class="nav nav-pills">
+      {% url 'race.views.scores' as scores_url %}
+      <li {% if request.path == scores_url %}class="active"{% endif %}>
+	<a href="{{ scores_url }}">{% trans "Top 50" %}</a>
+      </li>
+      {% url 'race.views.my_scores' as my_scores_url %}
+      <li {% if request.path == my_scores_url %}class="active"{% endif %}>
+	<a href="{{ my_scores_url }}">{% trans "My standing" %}</a></li>
+    </ul>
+    <table class="table table-striped table-bordered">
+      <thead>
+	<tr>
+	  <td><strong>{% trans "Rank" %}</strong></td>
+	  <td><strong>{% trans "Username" %}</strong></td>
+	  <td><strong>{% trans "Score" %}</strong></td>
+	</tr>
+      </thead>
+      <tbody>
+	{% for user_score in driver_scores %}
+	<tr>
+	  <td>{{ user_score.rank }}</td>
+	  <td>{{ user_score.username }}</td>
+	  <td>{{ user_score.score }}</td>
+	</tr>
+	{% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+{% endblock %}

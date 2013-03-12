@@ -6,4 +6,7 @@ urlpatterns = patterns('',
     url('^dashboard/overall_race/constructor/$', 'race.views.overall_constructor_prediction'),
     url('^dashboard/race(?P<race_id>\d+)/driver/$', 'race.views.race_driver_prediction'),
     url('^dashboard/race(?P<race_id>\d+)/constructor/$', 'race.views.race_constructor_prediction'),
+    url('^dashboard/scores/$', 'race.views.scores'),
+    url('^dashboard/my_scores/$', 'race.views.my_scores'),
+    url('^dashboard/results/$', 'race.views.results'),
 )

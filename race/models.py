@@ -3,7 +3,6 @@ from django.contrib.auth.models import User
 from django.utils.translation import ugettext as _
 from django.db.models.signals import post_save
 from rq import Queue
-from redis import Redis
 from django.conf import settings
 
 class Country(models.Model):
@@ -183,7 +182,7 @@ def update_scores(instance):
 # Signal handlers
 def update_scores_signal_handler(**kwargs):
     if kwargs["created"]:
-        redis_conn = Redis()
+        redis_conn = settings.REDIS_CONN
         queue_kwargs = {"connection": redis_conn}
         if settings.DEBUG == True:
             queue_kwargs.update({"async": False})

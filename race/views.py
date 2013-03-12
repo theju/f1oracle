@@ -1,11 +1,13 @@
 from .models import Driver, Constructor, Race, OverallDriverPredictionHistory, \
     OverallConstructorPredictionHistory, OverallConstructorPrediction, \
-    OverallDriverPrediction, RaceDriverPrediction, RaceConstructorPrediction
+    OverallDriverPrediction, RaceDriverPrediction, RaceConstructorPrediction, \
+    RaceUserWinner
 from django.shortcuts import render_to_response
 from django.template import RequestContext
 from django.views.decorators.http import require_POST
 from django.contrib.auth.decorators import login_required
 from django.http import Http404
+from django.conf import settings
 import datetime
 
 @login_required
@@ -127,4 +129,35 @@ def race_constructor_prediction(request, race_id=None):
                                                      constructor=constructor)
     return render_to_response("race/dashboard.html",
                               context,
+                              context_instance=RequestContext(request))
+
+
+@login_required
+def scores(request):
+    redis = settings.REDIS_CONN
+    scores = redis.zrevrange("ranks", 0, 50, withscores=True)
+    return render_to_response("race/scores.html",
+                              {"scores": scores},
+                              context_instance=RequestContext(request))
+
+@login_required
+def my_scores(request):
+    redis = settings.REDIS_CONN
+    my_standing = redis.zrevrank("ranks", request.user.username)
+    if not my_standing:
+        my_standing = 5
+        
+    scores = redis.zrevrange("ranks",
+                             my_standing - 5,
+                             my_standing + 5,
+                             withscores=True)
+    return render_to_response("race/scores.html",
+                              {"scores": scores},
+                              context_instance=RequestContext(request))
+
+
+@login_required
+def results(request):
+    race_winners = RaceUserWinner.objects.all()
+    return render_to_response("race/results.html", {"race_winners": race_winners},
                               context_instance=RequestContext(request))

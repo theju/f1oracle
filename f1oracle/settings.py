@@ -1,5 +1,6 @@
 # Django settings for f1oracle project.
 import os
+import redis
 
 PROJECT_PATH = os.path.dirname(os.path.abspath(__file__))
 
@@ -140,6 +141,8 @@ INSTALLED_APPS = (
     'race',
     'accounts',
 )
+
+REDIS_CONN = redis.Redis()
 
 # A sample logging configuration. The only tangible logging
 # performed by this configuration is to send an email to

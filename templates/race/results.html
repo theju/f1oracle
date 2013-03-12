@@ -1,0 +1,24 @@
+{% extends "base.html" %}{% load i18n %}
+
+{% block content %}
+<div class="row-fluid">
+  <div class="span12">
+    <table class="table table-striped table-bordered">
+      <thead>
+	<tr>
+	  <td><strong>{% trans "Race" %}</strong></td>
+	  <td><strong>{% trans "Username" %}</strong></td>
+	</tr>
+      </thead>
+      <tbody>
+	{% for winner in race_winners %}
+	<tr>
+	  <td>{{ winner.race }} {% trans "Grand Prix" %}</td>
+	  <td>{{ winner.username }}</td>
+	</tr>
+	{% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+{% endblock %}
