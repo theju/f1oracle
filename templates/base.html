@@ -44,6 +44,7 @@
                             <li><a href="{% url 'accounts.views.register' %}">{% trans "Register" %}</a></li>
                             <li><a href="{% url 'accounts.views.login' %}">{% trans "Login" %}</a></li>
 			  {% else %}
+			    <li><a href="{% url 'race.views.dashboard' %}">Dashboard</a></li>
 			    <li><a href="{% url 'race.views.scores' %}">Scores</a></li>
 			    <li><a href="{% url 'race.views.results' %}">Results</a></li>
 			    <li><a href="{% url 'accounts.views.logout' %}">Logout</a></li>

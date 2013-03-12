@@ -72,7 +72,7 @@
       {% if race.error %}<p class="error">{{ race.error }}</p>{% endif %}
       <select name="constructor_id">
 	{% for constructor in constructors %}
-	<option value="{{ constructor.id }}" {% for race_prediction in race_constructor_predictions %}{% if race_constructor_prediction.constructor.id == constructor.id %}selected="selected"{% endif %}{% endfor %}>{{ constructor }}</option>
+	<option value="{{ constructor.id }}" {% for race_prediction in race_constructor_predictions %}{% if race_prediction.constructor.id == constructor.id %}selected="selected"{% endif %}{% endfor %}>{{ constructor }}</option>
 	{% endfor %}
       </select>
       <input type="submit" value="Submit" class="btn btn-primary">
