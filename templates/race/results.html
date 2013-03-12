@@ -12,9 +12,9 @@
       </thead>
       <tbody>
 	{% for winner in race_winners %}
-	<tr>
+	<tr {% if winner_user.username == request.user.username %}class="success"{% endif %}>
 	  <td>{{ winner.race }} {% trans "Grand Prix" %}</td>
-	  <td>{{ winner.username }}</td>
+	  <td>{{ winner.user.username }}</td>
 	</tr>
 	{% endfor %}
       </tbody>

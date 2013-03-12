@@ -22,7 +22,7 @@
       </thead>
       <tbody>
 	{% for user_score in driver_scores %}
-	<tr>
+	<tr {% if user_score.username == request.user.username %}class="success"{% endif %}>
 	  <td>{{ user_score.rank }}</td>
 	  <td>{{ user_score.username }}</td>
 	  <td>{{ user_score.score }}</td>
