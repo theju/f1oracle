@@ -8,6 +8,10 @@ from django.views.decorators.http import require_POST
 from django.contrib.auth.decorators import login_required
 from django.http import Http404
 from django.conf import settings
+from django.contrib import messages
+from django.utils.translation import ugettext as _
+from django.http import HttpResponseRedirect
+from django.core.urlresolvers import reverse
 import datetime
 
 @login_required
@@ -22,13 +26,12 @@ def overall_driver_prediction(request):
         driver = Driver.objects.get(id=request.POST["driver_id"])
     except DriverDoesNotExist:
         raise Http404
-    context = {}
     driver_predictions = OverallDriverPredictionHistory.objects.filter(user=request.user).count()
     if driver_predictions >= 3:
-        context["max_try_error"] = {"driver": True}
-        return render_to_response("race/dashboard.html",
-                                  context,
-                                  context_instance=RequestContext(request))
+        messages.add_message(request, messages.ERROR,
+                             _("You've exceeded the maximum number of "
+                               "tries to update the prediction"))
+        return HttpResponseRedirect(reverse("dashboard"))
     try:
         driver_prediction = OverallDriverPrediction.objects.get(user=request.user)
         if driver_prediction.driver != driver:
@@ -43,9 +46,9 @@ def overall_driver_prediction(request):
     OverallDriverPredictionHistory.objects.create(user=request.user,
                                                   driver=driver,
                                                   score=score)
-    return render_to_response("race/dashboard.html",
-                              context,
-                              context_instance=RequestContext(request))
+    messages.add_message(request, messages.SUCCESS,
+                         _("You've successfully updated your prediction"))
+    return HttpResponseRedirect(reverse("dashboard"))
 
 @login_required
 @require_POST
@@ -54,13 +57,12 @@ def overall_constructor_prediction(request):
         constructor = Constructor.objects.get(id=request.POST["constructor_id"])
     except ConstructorDoesNotExist:
         raise Http404
-    context = {}
     constructor_predictions = OverallConstructorPredictionHistory.objects.filter(user=request.user).count()
     if constructor_predictions >= 3:
-        context["max_try_error"] = {"constructor": True}
-        return render_to_response("race/dashboard.html",
-                                  context,
-                                  context_instance=RequestContext(request))
+        messages.add_message(request, messages.ERROR,
+                             _("You've exceeded the maximum number of "
+                               "tries to update the prediction"))
+        return HttpResponseRedirect(reverse("dashboard"))
     try:
         constructor_prediction = OverallConstructorPrediction.objects.get(user=request.user)
         if constructor_prediction.constructor != constructor:
@@ -75,14 +77,13 @@ def overall_constructor_prediction(request):
     OverallConstructorPredictionHistory.objects.create(user=request.user,
                                                        constructor=constructor,
                                                        score=score)
-    return render_to_response("race/dashboard.html",
-                              context,
-                              context_instance=RequestContext(request))
+    messages.add_message(request, messages.SUCCESS,
+                         _("You've successfully updated your prediction"))
+    return HttpResponseRedirect(reverse("dashboard"))
 
 @login_required
 @require_POST
 def race_driver_prediction(request, race_id=None):
-    context = {}
     try:
         race = Race.objects.get(id=race_id)
     except Race.DoesNotExist:
@@ -101,14 +102,13 @@ def race_driver_prediction(request, race_id=None):
             RaceDriverPrediction.objects.create(user=request.user,
                                                 race=race,
                                                 driver=driver)
-    return render_to_response("race/dashboard.html",
-                              context,
-                              context_instance=RequestContext(request))
+    messages.add_message(request, messages.SUCCESS,
+                         _("You've successfully updated your prediction"))
+    return HttpResponseRedirect(reverse("dashboard"))
 
 @login_required
 @require_POST
 def race_constructor_prediction(request, race_id=None):
-    context = {}
     try:
         race = Race.objects.get(id=race_id)
     except Race.DoesNotExist:
@@ -127,9 +127,9 @@ def race_constructor_prediction(request, race_id=None):
             RaceConstructorPrediction.objects.create(user=request.user,
                                                      race=race,
                                                      constructor=constructor)
-    return render_to_response("race/dashboard.html",
-                              context,
-                              context_instance=RequestContext(request))
+    messages.add_message(request, messages.SUCCESS,
+                         _("You've successfully updated your prediction"))
+    return HttpResponseRedirect(reverse("dashboard"))
 
 
 @login_required
