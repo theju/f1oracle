@@ -40,8 +40,14 @@
                     <a class="brand" href="/">{% trans "F1 Oracle" %}</a>
                     <div class="nav-collapse collapse">
                         <ul class="nav">
+			  {% if request.user.is_anonymous %}
                             <li><a href="{% url 'accounts.views.register' %}">{% trans "Register" %}</a></li>
                             <li><a href="{% url 'accounts.views.login' %}">{% trans "Login" %}</a></li>
+			  {% else %}
+			    <li><a href="{% url 'race.views.scores' %}">Scores</a></li>
+			    <li><a href="{% url 'race.views.results' %}">Results</a></li>
+			    <li><a href="{% url 'accounts.views.logout' %}">Logout</a></li>
+			  {% endif %}
                         </ul>
                     </div><!--/.nav-collapse -->
                 </div>

@@ -4,7 +4,7 @@ from django.shortcuts import render_to_response
 from django.template import RequestContext
 from django.core.urlresolvers import reverse
 from django.contrib.auth.models import User
-from django.contrib.auth import authenticate, login as django_login
+from django.contrib.auth import authenticate, login as django_login, logout
 
 def register(request):
     form = RegisterForm()
@@ -35,5 +35,7 @@ def login(request):
             return HttpResponseRedirect(reverse("dashboard"))
     return render_to_response("accounts/login.html", {"form": form},
                               context_instance=RequestContext(request))
-            
-                
+
+def logout(request):
+    logout(request)
+    return HttpResponseRedirect(reverse("accounts_login"))
