@@ -14,6 +14,10 @@ from django.http import HttpResponseRedirect
 from django.core.urlresolvers import reverse
 import datetime
 
+def index(request):
+    return render_to_response("race/index.html", {},
+                              context_instance=RequestContext(request))
+
 @login_required
 def dashboard(request):
     return render_to_response("race/dashboard.html", {},

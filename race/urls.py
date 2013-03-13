@@ -1,6 +1,7 @@
 from django.conf.urls import patterns, include, url
 
 urlpatterns = patterns('',
+    url('^$', 'race.views.index', name='index'),
     url('^dashboard/$', 'race.views.dashboard', name='dashboard'),
     url('^dashboard/overall_race/driver/$', 'race.views.overall_driver_prediction'),
     url('^dashboard/overall_race/constructor/$', 'race.views.overall_constructor_prediction'),

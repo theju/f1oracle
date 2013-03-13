@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1>Can you predict the champion of the F1 Season?</h1>
+<h2>Want to challenge your friends with your predictions?</h2>
+<h3>Make predictions for the driver and constructor in every race of the season.</h3>
+
+<h5>Rules</h5>
+
+<ul>
+  <li>You may change the top driver and constructor upto 3 times in the season.</li>
+  <li>If you change your top driver and/or constructor, the score from your prediction
+    will be updated only from the next race i.e your scores will not be updated
+    retrospectively.</li>
+  <li>The user who correctly selects the driver and constructor with maximum points
+    in a race wins the prediction. In the event of a tie, a user will be
+    picked randomly and declared the winner.</li>
+  <li>The results for a race will be declared after the publication of the official
+    timing sheet by FIA.</li>
+  <li>The user who scores the highest number of points from his top driver and
+    constructor will win the season. In the event of a tie, the user with least
+    number of prediction changes wins. If there is a tie based on this
+    condition too, a user will be selected randomly and declared a winner.</li>
+  <li>The results for the top driver and constructor will be declared after the
+    culmination of the F1 season.</li>
+</ul>
+
+<p><a href="{% url 'accounts.views.register' %}" class="btn btn-large btn-primary">Register</a> to get started or <a href="{% url 'accounts.views.login' %}" class="btn btn-large btn-primary">Login</a> to change your predictions</p>
+{% endblock %}
