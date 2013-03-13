@@ -54,7 +54,7 @@
       <select name="driver_id">
 	<option value="-">-----</option>
 	{% for driver in drivers %}
-	<option value="{{ driver.id }}" {% for race_prediction in race_driver_predictions %}{% if race_prediction.driver.id == driver.id %}selected="selected"{% endif %}{% endfor %}>{{ driver }} ({{ driver.constructor }})</option>
+	<option value="{{ driver.id }}" {% for race_prediction in race_driver_predictions %}{% if race_prediction.driver.id == driver.id and race.id == race_prediction.race.id %}selected="selected"{% endif %}{% endfor %}>{{ driver }} ({{ driver.constructor }})</option>
 	{% endfor %}
       </select>
       <input type="submit" value="Submit" class="btn btn-primary">
@@ -68,7 +68,7 @@
       <select name="constructor_id">
 	<option value="-">-----</option>
 	{% for constructor in constructors %}
-	<option value="{{ constructor.id }}" {% for race_prediction in race_constructor_predictions %}{% if race_prediction.constructor.id == constructor.id %}selected="selected"{% endif %}{% endfor %}>{{ constructor }}</option>
+	<option value="{{ constructor.id }}" {% for race_prediction in race_constructor_predictions %}{% if race_prediction.constructor.id == constructor.id and race.id == race_prediction.race.id %}selected="selected"{% endif %}{% endfor %}>{{ constructor }}</option>
 	{% endfor %}
       </select>
       <input type="submit" value="Submit" class="btn btn-primary">
