@@ -11,8 +11,9 @@
       <form action="{% url 'race.views.overall_driver_prediction' %}" method="post">
 	{% csrf_token %}
 	<select name="driver_id">
+	  <option value="-">-----</option>
 	  {% for driver in drivers %}
-	  <option value="{{ driver.id }}" {% if overall_driver_prediction.driver.id == driver.id %}selected="selected"{% endif %}>{{ driver }}</option>
+	  <option value="{{ driver.id }}" {% if overall_driver_prediction.driver.id == driver.id %}selected="selected"{% endif %}>{{ driver }} ({{ driver.constructor }})</option>
 	  {% endfor %}
 	</select>
 	<input type="submit" value="Submit" class="btn btn-primary">
@@ -26,6 +27,7 @@
       <form action="{% url 'race.views.overall_constructor_prediction' %}" method="post">
 	{% csrf_token %}
 	<select name="constructor_id">
+	  <option value="-">-----</option>
 	  {% for constructor in constructors %}
 	  <option value="{{ constructor.id }}" {% if overall_constructor_prediction.constructor.id == constructor.id %}selected="selected"{% endif %}>{{ constructor }}</option>
 	  {% endfor %}
@@ -50,8 +52,9 @@
     <form action="{% url 'race.views.race_driver_prediction' race_id=race.id %}" method="post">
       {% csrf_token %}
       <select name="driver_id">
+	<option value="-">-----</option>
 	{% for driver in drivers %}
-	<option value="{{ driver.id }}" {% for race_prediction in race_driver_predictions %}{% if race_prediction.driver.id == driver.id %}selected="selected"{% endif %}{% endfor %}>{{ driver }}</option>
+	<option value="{{ driver.id }}" {% for race_prediction in race_driver_predictions %}{% if race_prediction.driver.id == driver.id %}selected="selected"{% endif %}{% endfor %}>{{ driver }} ({{ driver.constructor }})</option>
 	{% endfor %}
       </select>
       <input type="submit" value="Submit" class="btn btn-primary">
@@ -63,6 +66,7 @@
     <form action="{% url 'race.views.race_constructor_prediction' race_id=race.id %}" method="post">
       {% csrf_token %}
       <select name="constructor_id">
+	<option value="-">-----</option>
 	{% for constructor in constructors %}
 	<option value="{{ constructor.id }}" {% for race_prediction in race_constructor_predictions %}{% if race_prediction.constructor.id == constructor.id %}selected="selected"{% endif %}{% endfor %}>{{ constructor }}</option>
 	{% endfor %}
