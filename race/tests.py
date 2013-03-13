@@ -107,7 +107,7 @@ class RaceTestCase(TestCase):
         driver_id = 5
         response = self.client.post("/dashboard/overall_race/driver/",
                                     {"driver_id": driver_id})
-        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.status_code, 302)
         self.assertEqual(OverallDriverPrediction.objects.count(), 1)
         user_prediction = OverallDriverPrediction.objects.get()
         self.assertEqual(user_prediction.driver.id, driver_id)
@@ -135,7 +135,7 @@ class RaceTestCase(TestCase):
         for ii in range(4):
             response = self.client.post("/dashboard/overall_race/driver/",
                                         {"driver_id": driver_id + ii})
-            self.assertEqual(response.status_code, 200)
+            self.assertEqual(response.status_code, 302)
         user_prediction = OverallDriverPrediction.objects.get(user=user)
         self.assertEqual(user_prediction.driver.id, 7)
         self.assertEqual(OverallDriverPredictionHistory.objects.count(), 3)
@@ -147,7 +147,7 @@ class RaceTestCase(TestCase):
         constructor_id = 2
         response = self.client.post("/dashboard/overall_race/constructor/",
                                     {"constructor_id": constructor_id})
-        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.status_code, 302)
         self.assertEqual(OverallConstructorPrediction.objects.filter(user=user).count(), 1)
         user_prediction = OverallConstructorPrediction.objects.get(user=user)
         self.assertEqual(user_prediction.constructor.id, constructor_id)
@@ -179,7 +179,7 @@ class RaceTestCase(TestCase):
         constructor_id = 2
         response = self.client.post("/dashboard/overall_race/constructor/",
                                     {"constructor_id": constructor_id})
-        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.status_code, 302)
         self.assertEqual(OverallConstructorPrediction.objects.filter(user=user).count(), 1)
         self.assertEqual(OverallConstructorPredictionHistory.objects.filter(user=user).count(), 2)
         user_prediction = OverallConstructorPrediction.objects.get(user=user)
@@ -191,7 +191,7 @@ class RaceTestCase(TestCase):
         constructor_id = 5
         response = self.client.post("/dashboard/overall_race/constructor/",
                                     {"constructor_id": constructor_id})
-        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.status_code, 302)
         self.assertEqual(OverallConstructorPrediction.objects.filter(user=user).count(), 1)
         user_prediction = OverallConstructorPrediction.objects.get(user=user)
         self.assertEqual(user_prediction.constructor.id, constructor_id)
@@ -223,7 +223,7 @@ class RaceTestCase(TestCase):
         constructor_id = 2
         response = self.client.post("/dashboard/overall_race/constructor/",
                                     {"constructor_id": constructor_id})
-        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.status_code, 302)
         self.assertEqual(OverallConstructorPrediction.objects.filter(user=user).count(), 1)
         self.assertEqual(OverallConstructorPredictionHistory.objects.filter(user=user).count(), 2)
         user_prediction = OverallConstructorPrediction.objects.get(user=user)
@@ -248,7 +248,7 @@ class RaceTestCase(TestCase):
         driver_id = 5
         response = self.client.post("/dashboard/race1/driver/",
                                     {"driver_id": driver_id})
-        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.status_code, 302)
         self.assertEqual(RaceDriverPrediction.objects.count(), 1)
         user_prediction = RaceDriverPrediction.objects.get()
         self.assertEqual(user_prediction.race.country.iso_code, "AU")
@@ -269,13 +269,13 @@ class RaceTestCase(TestCase):
         constructor_id = 2
         response = self.client.post("/dashboard/race1/constructor/",
                                     {"constructor_id": constructor_id})
-        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.status_code, 302)
         self.assertEqual(RaceConstructorPrediction.objects.count(), 1)
         user_prediction = RaceConstructorPrediction.objects.get()
         self.assertEqual(user_prediction.race.country.iso_code, "AU")
         self.assertEqual(user_prediction.constructor.id, constructor_id)
         self.assertEqual(user_prediction.score, 0)
-        self.assertEqual(user_prediction.user, user)        
+        self.assertEqual(user_prediction.user, user)
 
         driver1 = Driver.objects.get(id=4)
         driver2 = Driver.objects.get(id=3)
