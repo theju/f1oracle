@@ -22,6 +22,10 @@ def dashboard(request):
 @login_required
 @require_POST
 def overall_driver_prediction(request):
+    if request.POST["driver_id"] == "-":
+        messages.add_message(request, messages.ERROR,
+                             _("Please select a valid driver"))
+        return HttpResponseRedirect(reverse("dashboard"))
     try:
         driver = Driver.objects.get(id=request.POST["driver_id"])
     except DriverDoesNotExist:
@@ -53,6 +57,10 @@ def overall_driver_prediction(request):
 @login_required
 @require_POST
 def overall_constructor_prediction(request):
+    if request.POST["constructor_id"] == "-":
+        messages.add_message(request, messages.ERROR,
+                             _("Please select a valid constructor"))
+        return HttpResponseRedirect(reverse("dashboard"))
     try:
         constructor = Constructor.objects.get(id=request.POST["constructor_id"])
     except ConstructorDoesNotExist:
@@ -88,6 +96,10 @@ def race_driver_prediction(request, race_id=None):
         race = Race.objects.get(id=race_id)
     except Race.DoesNotExist:
         raise Http404
+    if request.POST["driver_id"] == "-":
+        messages.add_message(request, messages.ERROR,
+                             _("Please select a valid driver"))
+        return HttpResponseRedirect(reverse("dashboard"))
     try:
         driver = Driver.objects.get(id=request.POST["driver_id"])
     except Driver.DoesNotExist:
@@ -102,8 +114,8 @@ def race_driver_prediction(request, race_id=None):
             RaceDriverPrediction.objects.create(user=request.user,
                                                 race=race,
                                                 driver=driver)
-    messages.add_message(request, messages.SUCCESS,
-                         _("You've successfully updated your prediction"))
+        messages.add_message(request, messages.SUCCESS,
+                             _("You've successfully updated your prediction"))
     return HttpResponseRedirect(reverse("dashboard"))
 
 @login_required
@@ -113,6 +125,10 @@ def race_constructor_prediction(request, race_id=None):
         race = Race.objects.get(id=race_id)
     except Race.DoesNotExist:
         raise Http404
+    if request.POST["constructor_id"] == "-":
+        messages.add_message(request, messages.ERROR,
+                             _("Please select a valid constructor"))
+        return HttpResponseRedirect(reverse("dashboard"))
     try:
         constructor = Constructor.objects.get(id=request.POST["constructor_id"])
     except Constructor.DoesNotExist:
@@ -127,8 +143,8 @@ def race_constructor_prediction(request, race_id=None):
             RaceConstructorPrediction.objects.create(user=request.user,
                                                      race=race,
                                                      constructor=constructor)
-    messages.add_message(request, messages.SUCCESS,
-                         _("You've successfully updated your prediction"))
+        messages.add_message(request, messages.SUCCESS,
+                             _("You've successfully updated your prediction"))
     return HttpResponseRedirect(reverse("dashboard"))
 
 
