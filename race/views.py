@@ -179,7 +179,7 @@ def my_scores(request):
         scores_list.append({"rank": my_standing - 5 + 1,
                             "username": ii[0], "score": int(ii[1])})
     return render_to_response("race/scores.html",
-                              {"scores": scores},
+                              {"scores": scores_list},
                               context_instance=RequestContext(request))
 
 
