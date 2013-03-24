@@ -176,7 +176,7 @@ def my_scores(request):
                                               my_standing - 5,
                                               my_standing + 5,
                                               withscores=True)):
-        scores_list.append({"rank": my_standing - 5 + 1,
+        scores_list.append({"rank": rank + 1,
                             "username": ii[0], "score": int(ii[1])})
     return render_to_response("race/scores.html",
                               {"scores": scores_list},
