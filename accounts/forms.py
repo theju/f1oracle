@@ -20,6 +20,13 @@ class RegisterForm(forms.Form):
                                         % {"username": username})
         return username
 
+    def clean_email(self):
+        email = self.cleaned_data["email"]
+        if email:
+            if User.objects.filter(email=email).count():
+                raise forms.ValidationError(_("Email address already taken"))
+        return email
+
     def clean(self):
         if self.cleaned_data.get("password1") and \
                 self.cleaned_data["password1"] != self.cleaned_data["password2"]:
@@ -41,4 +48,26 @@ class LoginForm(forms.Form):
         if not user.check_password(self.cleaned_data.get("password")):
             raise forms.ValidationError(_("Username/Password did not match any of the "
                                           "records in our system"))
+        return self.cleaned_data
+
+class PasswordResetForm(forms.Form):
+    email = forms.EmailField(label=_('Email'))
+
+    def clean(self):
+        try:
+            User.objects.get(email=self.cleaned_data.get("email"))
+        except User.DoesNotExist:
+            raise forms.ValidationError(_("No account seems to have been registered "
+                                          "with this email address"))
+        return self.cleaned_data
+
+class PasswordChangeForm(forms.Form):
+    token = forms.CharField(widget=forms.HiddenInput())
+    password1 = forms.CharField(widget=forms.PasswordInput())
+    password2 = forms.CharField(widget=forms.PasswordInput())
+
+    def clean(self):
+        if self.cleaned_data.get("password1") and \
+                self.cleaned_data["password1"] != self.cleaned_data["password2"]:
+            raise forms.ValidationError(_("Passwords do not match"))
         return self.cleaned_data

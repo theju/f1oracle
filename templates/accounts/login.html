@@ -4,5 +4,6 @@
 <form action="{% url 'accounts.views.login' %}" method="post">{% csrf_token %}
 {{ form }}
 <p><input type="submit" value="{% trans "Login" %}" class="btn btn-primary"></p>
+<p><a href="{% url 'accounts.views.password_reset' %}">{% trans "Forgot Password?" %}</a></p>
 </form>
 {% endblock %}
