@@ -20,10 +20,10 @@ class PasswordResetToken(models.Model):
 def send_password_reset(**kwargs):
     if kwargs["created"]:
         instance = kwargs["instance"]
-        site_name = Site.objects.get_current().name
-        send_mail('Password reset for {0}'.format(site_name),
+        site = Site.objects.get_current()
+        send_mail('Password reset for {0}'.format(site.name),
                   render_to_string('accounts/password_reset_email.txt',
-                                   {"site_name": site_name,
+                                   {"site": site,
                                     "password_token": instance.token}),
                   settings.DEFAULT_FROM_EMAIL, [instance.user.email],
                   fail_silently=False)
