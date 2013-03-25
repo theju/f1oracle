@@ -25,5 +25,7 @@
     culmination of the F1 season.</li>
 </ul>
 
+{% if request.user.is_anonymous %}
 <p><a href="{% url 'accounts.views.register' %}" class="btn btn-large btn-primary">Register</a> to get started or <a href="{% url 'accounts.views.login' %}" class="btn btn-large btn-primary">Login</a> to change your predictions</p>
+{% endif %}
 {% endblock %}
