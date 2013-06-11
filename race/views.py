@@ -185,6 +185,6 @@ def my_scores(request):
 
 @login_required
 def results(request):
-    race_winners = RaceUserWinner.objects.all()
+    race_winners = RaceUserWinner.objects.all().order_by('-race__start_date')
     return render_to_response("race/results.html", {"race_winners": race_winners},
                               context_instance=RequestContext(request))
