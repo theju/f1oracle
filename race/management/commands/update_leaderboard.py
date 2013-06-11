@@ -9,7 +9,7 @@ class Command(BaseCommand):
     def handle(self, *args, **kwargs):
         conn = settings.REDIS_CONN
         num_ranks = conn.zcard("ranks")
-        conn.zremrangebyscore("ranks", 0, num_ranks)
+        conn.zremrangebyscore("ranks", 0, num_ranks + 1)
         for driver_prediction in OverallDriverPrediction.objects.all():
             conn.zadd("ranks",
                       driver_prediction.user.username,
