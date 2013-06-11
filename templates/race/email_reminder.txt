@@ -1,0 +1,8 @@
+Hello,
+Today's the last day to record your prediction for the {{ race.name|capfirst }} GP.
+
+Please visit http://{{ site.domain }}/ to make your predictions.
+
+--
+Regards
+Team F1Oracle
